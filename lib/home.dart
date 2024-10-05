@@ -32,124 +32,26 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
-      drawer: const Mydrawer(),
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Compra Fácil",
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.blue
-      ),
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverAppBar(
-            actions: [
-              IconButton(onPressed: (){}, icon: const Icon(Icons.abc)),
-              IconButton(onPressed: (){}, icon: const Icon(Icons.abc))
-            ],
-            // leading: IconButton(onPressed: (){}, icon: const Icon(Icons.person)),
-            backgroundColor: Colors.blueGrey,
-            pinned: _pinned,
-            snap: _snap,
-            floating: _floating,
-            expandedHeight: 160.0,
-            flexibleSpace: FlexibleSpaceBar(
-              title: _isAppBarExpanded
-                  ? const Text("Olá, Fulano!") // Only show title when expanded
-                  : null, // Hide title when collapsed
-            ),
+    return DefaultTabController(length: 2,
+    child: Scaffold(
+        drawer: const Mydrawer(),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text("Compra Fácil",
+            style: TextStyle(color: Colors.white),
           ),
-          // const SliverFillRemaining(
-          //   child: TabBarView(
-          //     children: [
-          //       homeTab(),
-          //       homeList()
-          //     ],)
-          // )
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  color: index.isOdd ? Colors.white : Colors.black12,
-                  height: 100.0,
-                  child: Center(
-                    child:
-                        Text('$index', textScaler: const TextScaler.linear(5)),
-                  ),
-                );
-              },
-              childCount: 20,
-            ),
-          ),
-        ]
-      // const TabBarView(
-      //   children: [
-      //     homeTab(),
-      //     homeList()
-      //   ],
+          backgroundColor: Colors.blue,
+          bottom: const TabBar(tabs: [Tab(icon: const Icon(Icons.tab)),
+          Tab(icon: Icon(Icons.face),)
+          ])),
+      body: 
+      const TabBarView(
+        children: [
+          homeTab(),
+          homeList()
+        ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: OverflowBar(
-            overflowAlignment: OverflowBarAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('pinned'),
-                  Switch(
-                    onChanged: (bool val) {
-                      setState(() {
-                        _pinned = val;
-                      });
-                    },
-                    value: _pinned,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('snap'),
-                  Switch(
-                    onChanged: (bool val) {
-                      setState(() {
-                        _snap = val;
-                        // Snapping only applies when the app bar is floating.
-                        _floating = _floating || _snap;
-                      });
-                    },
-                    value: _snap,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const Text('floating'),
-                  Switch(
-                    onChanged: (bool val) {
-                      setState(() {
-                        _floating = val;
-                        _snap = _snap && _floating;
-                      });
-                    },
-                    value: _floating,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      // bottomNavigationBar: BottomNavigationBar(items: const [
-      //   BottomNavigationBarItem(icon: Icon(Icons.face),label: "Face"),
-      //   BottomNavigationBarItem(icon: Icon(Icons.telegram), label: "Telegram")
-      // ]),
-    );
+      
+    ));
   }
 }
